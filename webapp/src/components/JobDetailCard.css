@@ -1,0 +1,18 @@
+.job-detail-card {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  border: 1px;
+  border-radius: 6px;
+  border-color: black;
+  border-style: solid;
+}
+
+.margin-bottom-4 {
+  margin-bottom: 4px;
+}
+
+.job-detail-card-buttons {
+  display: flex;
+  flex-direction: row;
+}

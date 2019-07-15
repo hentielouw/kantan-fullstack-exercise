@@ -1,0 +1,16 @@
+.jobs-screen {
+  max-width: 768px;
+  margin: auto;
+  padding: 4px;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.job-list-item {
+  margin: 0px 8px 8px 8px;
+  list-style: none;
+}
