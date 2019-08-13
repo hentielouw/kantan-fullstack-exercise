@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 
 import JobCard from './JobCard';
@@ -6,33 +6,37 @@ import { getJobs, JobResponse } from '../services/jobsApi';
 
 import './JobsScreen.css';
 
-const JobsScreen = (prop: RouteComponentProps) => {
-  const [jobs, setJobs] = useState<JobResponse[]>([]);
+interface State {
+  jobs: JobResponse[];
+}
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      const apiJobs = await getJobs();
-      setJobs(apiJobs);
-    };
+class JobsScreen extends Component<RouteComponentProps, State> {
+  state: State = {
+    jobs: []
+  };
 
-    fetchJobs();
-  }, [setJobs]);
+  public async componentDidMount() {
+    const apiJobs = await getJobs();
+    this.setState({ jobs: apiJobs });
+  }
 
-  return (
-    <div className="jobs-screen">
-      <ul className="job-list">
-        {jobs.map(job => (
-          <li
-            key={job.id}
-            className="job-list-item"
-            onClick={() => navigate(`/jobs/${job.id}`)}
-          >
-            <JobCard job={job} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+  public render() {
+    return (
+      <div className="jobs-screen">
+        <ul className="job-list">
+          {this.state.jobs.map(job => (
+            <li
+              key={job.id}
+              className="job-list-item"
+              onClick={() => navigate(`/jobs/${job.id}`)}
+            >
+              <JobCard job={job} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
 
 export default JobsScreen;

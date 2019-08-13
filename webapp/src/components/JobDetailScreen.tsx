@@ -12,7 +12,7 @@ interface State {
   job: JobResponse | undefined;
 }
 
-class JobsScreen extends Component<Props, State> {
+class JobDetailScreen extends Component<Props, State> {
   public state: State = {
     job: undefined
   };
@@ -58,4 +58,4 @@ class JobsScreen extends Component<Props, State> {
   }
 }
 
-export default JobsScreen;
+export default JobDetailScreen;
