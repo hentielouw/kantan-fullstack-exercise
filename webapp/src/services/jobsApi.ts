@@ -11,7 +11,7 @@ export interface JobResponse {
 }
 
 export const getJobs = async (): Promise<JobResponse[]> => {
-  const url = 'http://localhost:3030/api/jobs';
+  const url = 'http://localhost:8000/api/jobs';
   const response = await axios(url);
   if (response.status === 200) {
     return response.data;
