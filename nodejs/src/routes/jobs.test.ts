@@ -3,7 +3,7 @@ import app from '../app';
 
 import { jobs } from '../models/jobs';
 
-const resetJobModel = () => {
+const resetJobData = () => {
   jobs.splice(0, jobs.length);
   jobs.push(
     {
@@ -31,7 +31,7 @@ const resetJobModel = () => {
 };
 
 describe('GET jobs', () => {
-  beforeEach(resetJobModel);
+  beforeEach(resetJobData);
 
   it('should return a job if the ID exists', async () => {
     const response = await request(app).get('/api/jobs/id123');
@@ -57,51 +57,5 @@ describe('GET jobs', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(3);
-  });
-});
-
-xdescribe('PATCH jobs', () => {
-  beforeEach(resetJobModel);
-
-  it('should allow transition from ASSIGNED to IN_PROGRESS', async () => {
-    const response = await request(app)
-      .patch('/api/jobs/id123')
-      .send({ status: 'IN_PROGRESS' });
-
-    expect(response.status).toBe(200);
-    expect(response.body.status).toBe('IN_PROGRESS');
-  });
-
-  it('should allow transition from IN_PROGRESS to DONE', async () => {
-    const response = await request(app)
-      .patch('/api/jobs/id456')
-      .send({ status: 'DONE' });
-
-    expect(response.status).toBe(200);
-    expect(response.body.status).toBe('DONE');
-  });
-
-  it('should not allow transition from ASSIGNED to DONE', async () => {
-    const response = await request(app)
-      .patch('/api/jobs/id123')
-      .send({ status: 'DONE' });
-
-    expect(response.status).toBe(400);
-  });
-
-  it('should not allow transition from IN_PROGRESS to ASSIGNED', async () => {
-    const response = await request(app)
-      .patch('/api/jobs/id456')
-      .send({ status: 'ASSIGNED' });
-
-    expect(response.status).toBe(400);
-  });
-
-  it('should not allow transition from DONE to IN_PROGRESS', async () => {
-    const response = await request(app)
-      .patch('/api/jobs/id789')
-      .send({ status: 'IN_PROGRESS' });
-
-    expect(response.status).toBe(400);
   });
 });
