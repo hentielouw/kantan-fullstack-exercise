@@ -22,7 +22,3 @@ export const getJobs = async (): Promise<JobResponse[]> => {
 export const getJob = async (id: string) => {
   // TODO: Fetch specific job
 };
-
-export const createJob = async (id: string) => {};
-
-export const deleteJob = async (id: string) => {};

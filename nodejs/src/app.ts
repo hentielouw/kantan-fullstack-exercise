@@ -17,7 +17,6 @@ app.use((req, res, next) => {
 });
 
 // Register routes
-app.use('/api/user', routes.user);
 app.use('/api/jobs', routes.jobs);
 
 export default app;

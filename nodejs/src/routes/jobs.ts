@@ -5,11 +5,16 @@ import * as jobsCtrl from '../controllers/jobsController';
 const router = Router();
 
 router.get('/', (req, res) => {
-  return jobsCtrl.getAll(req, res);
+  const jobs = jobsCtrl.getAll();
+  res.send(jobs);
 });
 
 router.get('/:jobId', (req, res) => {
-  return jobsCtrl.getById(req, res);
+  const job = jobsCtrl.getById(req.params.jobId);
+  if (job) {
+    return res.send(job);
+  }
+  return res.sendStatus(404);
 });
 
 export default router;
