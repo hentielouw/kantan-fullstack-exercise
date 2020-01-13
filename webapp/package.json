@@ -22,7 +22,7 @@
     "typescript": "3.5.3"
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.5"
+    "@testing-library/react": "^9.4.0"
   },
   "eslintConfig": {
     "extends": "react-app"

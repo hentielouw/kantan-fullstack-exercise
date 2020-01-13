@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-import JobDetailCard from './JobDetailCard';
-import { JobResponse } from '../services/jobsApi';
+import JobDetailCard, { JobDetail } from './JobDetailCard';
 
 import './JobDetailScreen.css';
 
 type Props = RouteComponentProps<{ jobId: string }>;
 
 interface State {
-  job: JobResponse | undefined;
+  job: JobDetail | undefined;
 }
 
 class JobDetailScreen extends Component<Props, State> {
@@ -32,7 +31,6 @@ class JobDetailScreen extends Component<Props, State> {
     if (jobId) {
       this.setState({
         job: {
-          id: jobId,
           name: '???',
           address: '???',
           date: '???',

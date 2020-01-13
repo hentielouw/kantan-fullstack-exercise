@@ -1,11 +1,16 @@
 import React from 'react';
 
-import { JobResponse } from '../services/jobsApi';
-
 import './JobDetailCard.css';
 
+export type JobDetail = {
+  name: string;
+  address: string;
+  date: string;
+  status: 'ASSIGNED' | 'IN_PROGRESS' | 'DONE';
+};
+
 interface Props {
-  job: JobResponse;
+  job: JobDetail;
   onStartJob: () => void;
   onFinishJob: () => void;
 }

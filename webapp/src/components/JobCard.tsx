@@ -1,18 +1,18 @@
 import React from 'react';
-import { JobResponse } from '../services/jobsApi';
 
 import './JobCard.css';
 
 interface Props {
-  job: JobResponse;
+  name: string;
+  address: string;
+  date: string;
 }
 
-const Job = ({ job }: Props) => (
+const Job = ({ name, address, date }: Props) => (
   <div className="job-card">
-    <div>{job.name}</div>
-    <div>{job.address}</div>
-    <div>{job.date}</div>
-    <div>{job.status}</div>
+    <div>{name}</div>
+    <div>{address}</div>
+    <div>{date}</div>
   </div>
 );
 

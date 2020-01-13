@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 
 import JobCard from './JobCard';
-import { getJobs, JobResponse } from '../services/jobsApi';
+import { getJobs } from '../services/jobsApi';
 
 import './JobsScreen.css';
 
+type JobSummary = {
+  id: string;
+  name: string;
+  address: string;
+  date: string;
+};
+
 interface State {
-  jobs: JobResponse[];
+  jobs: JobSummary[];
 }
 
 class JobsScreen extends Component<RouteComponentProps, State> {
@@ -17,7 +24,15 @@ class JobsScreen extends Component<RouteComponentProps, State> {
 
   public async componentDidMount() {
     const apiJobs = await getJobs();
-    this.setState({ jobs: apiJobs });
+    const jobs = apiJobs.map(job => {
+      return {
+        id: job.id,
+        name: job.name,
+        address: job.address,
+        date: job.date
+      };
+    });
+    this.setState({ jobs });
   }
 
   public render() {
@@ -30,7 +45,7 @@ class JobsScreen extends Component<RouteComponentProps, State> {
               className="job-list-item"
               onClick={() => navigate(`/jobs/${job.id}`)}
             >
-              <JobCard job={job} />
+              <JobCard name={job.name} address={job.address} date={job.date} />
             </li>
           ))}
         </ul>
