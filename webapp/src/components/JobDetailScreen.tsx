@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import JobDetailCard, { JobDetail } from './JobDetailCard';
@@ -7,53 +7,41 @@ import './JobDetailScreen.css';
 
 type Props = RouteComponentProps<{ jobId: string }>;
 
-interface State {
-  job: JobDetail | undefined;
-}
+const JobDetailScreen: React.FC<Props> = ({ jobId }) => {
+  const [job, setJob] = React.useState<JobDetail>();
 
-class JobDetailScreen extends Component<Props, State> {
-  public state: State = {
-    job: undefined
-  };
-
-  private onStartJob = () => {
-    // TODO: Update backend
-  };
-
-  private onFinishJob = () => {
-    // TODO: Update backend
-  };
-
-  componentDidMount() {
-    // TODO: Fetch data from backend
-
-    const { jobId } = this.props;
+  React.useEffect(() => {
     if (jobId) {
-      this.setState({
-        job: {
-          name: '???',
-          address: '???',
-          date: '???',
-          status: 'ASSIGNED'
-        }
+      setJob({
+        name: '???',
+        address: '???',
+        date: '???',
+        status: 'ASSIGNED',
       });
     }
+  }, [jobId]);
+
+  const onStartJob = () => {
+    // TODO: Update backend
+  };
+
+  const onFinishJob = () => {
+    // TODO: Update backend
+  };
+
+  if (!job) {
+    return <div>Loading...</div>;
   }
 
-  render() {
-    const { job } = this.state;
-    return job ? (
-      <div className="job-detail-screen">
-        <JobDetailCard
-          job={job}
-          onStartJob={this.onStartJob}
-          onFinishJob={this.onFinishJob}
-        />
-      </div>
-    ) : (
-      <div>Loading...</div>
-    );
-  }
-}
+  return (
+    <div className="job-detail-screen">
+      <JobDetailCard
+        job={job}
+        onStartJob={onStartJob}
+        onFinishJob={onFinishJob}
+      />
+    </div>
+  );
+};
 
 export default JobDetailScreen;

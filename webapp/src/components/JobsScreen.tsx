@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 
 import JobCard from './JobCard';
@@ -13,45 +13,40 @@ type JobSummary = {
   date: string;
 };
 
-interface State {
-  jobs: JobSummary[];
-}
+const JobsScreen: React.FC<RouteComponentProps> = () => {
+  const [jobs, setJobs] = React.useState<JobSummary[]>([]);
 
-class JobsScreen extends Component<RouteComponentProps, State> {
-  state: State = {
-    jobs: []
-  };
+  React.useEffect(() => {
+    async function fetchJobs() {
+      const apiJobs = await getJobs();
+      const jobs = apiJobs.map((job) => {
+        return {
+          id: job.id,
+          name: job.name,
+          address: job.address,
+          date: job.date,
+        };
+      });
+      setJobs(jobs);
+    }
+    fetchJobs();
+  }, []);
 
-  public async componentDidMount() {
-    const apiJobs = await getJobs();
-    const jobs = apiJobs.map(job => {
-      return {
-        id: job.id,
-        name: job.name,
-        address: job.address,
-        date: job.date
-      };
-    });
-    this.setState({ jobs });
-  }
-
-  public render() {
-    return (
-      <div className="jobs-screen">
-        <ul className="job-list">
-          {this.state.jobs.map(job => (
-            <li
-              key={job.id}
-              className="job-list-item"
-              onClick={() => navigate(`/jobs/${job.id}`)}
-            >
-              <JobCard name={job.name} address={job.address} date={job.date} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="jobs-screen">
+      <ul className="job-list">
+        {jobs.map((job) => (
+          <li
+            key={job.id}
+            className="job-list-item"
+            onClick={() => navigate(`/jobs/${job.id}`)}
+          >
+            <JobCard name={job.name} address={job.address} date={job.date} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default JobsScreen;
